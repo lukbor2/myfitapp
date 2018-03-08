@@ -1,0 +1,34 @@
+# start MySQL. Will create an empty database on first start
+$ mysql-ctl start
+
+# stop MySQL
+$ mysql-ctl stop
+
+# run the MySQL interactive shell
+$ mysql-ctl cli
+
+You can then connect to the database with following parameters:
+
+    Hostname - $IP (The same local IP as the application you run on Cloud9)
+    Port - 3306 (The default MySQL port number)
+    User - $C9_USER (Your Cloud9 user name)
+    Password - “” (No password since you can only access the DB from within the workspace)
+    Database - c9 (The database username)
+
+
+To verify your hostname, you can connect to the mysql cli and show the host by running the following commands:
+
+mysql-ctl cli
+
+
+In my case I know that my root user is:
+
+lukbor2
+
+and the database name is:
+
+c9
+
+And my hostname is:
+
+lukbor2-myfitapp-5975123
