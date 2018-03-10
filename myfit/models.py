@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from django.urls import reverse
 
 class Device_Owner(models.Model):
     SEX = (
