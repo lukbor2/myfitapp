@@ -1,6 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 from datetime import date
 from django.urls import reverse
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Device_Owner(models.Model):
     SEX = (
@@ -26,6 +29,16 @@ class Device_Owner(models.Model):
     heart_rate_zone4_high = models.IntegerField(blank=True, null=False, default=0) #I will have a method calculating the heart rate zones.
     heart_rate_zone5_low = models.IntegerField(blank=True, null=False, default=0) #I will have a method calculating the heart rate zones.
     heart_rate_zone5_high = models.IntegerField(blank=True, null=False, default=0) #I will have a method calculating the heart rate zones.
+    user = models.OneToOneField(User, on_delete=models.CASCADE) #Each Device_Owner is also a user in terms of authentication.
+
+    @receiver(post_save, sender=User)
+    def create_user_device_owner(sender, instance, created, **kwargs):
+        if created:
+            Device_Owner.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_device_owner(sender, instance, **kwargs):
+        instance.device_owner.save()
 
     def __str__(self):
         return '{0} {1} {2}'.format(self.id, self.name,self.surname)
@@ -54,11 +67,11 @@ class Device(models.Model):
         return reverse('device-detail', args=[str(self.device_serial_no)])
 
 class Activity(models.Model):
-    activity_id = models.CharField(primary_key=True, max_length=20)
+    activity_id = models.CharField(verbose_name="Activity ID", primary_key=True, max_length=20)
     activity_time_original = models.CharField(blank=False, max_length=20)
-    activity_date = models.DateField(blank=False, null=False)
-    activity_time = models.TimeField(blank=False, null=False)
-    activity_duration = models.IntegerField(blank=False, null=False, default=0)
+    activity_date = models.DateField(verbose_name="Activity Date", blank=False, null=False)
+    activity_time = models.TimeField(verbose_name="Activity Time",blank=False, null=False)
+    activity_duration = models.IntegerField(verbose_name="Activity Duration",blank=False, null=False, default=0)
     activity_duration_hh = models.IntegerField(blank=False, null=False, default=0)
     activity_duration_mm = models.IntegerField(blank=False, null=False, default=0)
     activity_duration_ss = models.IntegerField(blank=False, null=False, default=0)

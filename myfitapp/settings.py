@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 # Adding my app called myfit
+# Adding also the etc app which comes with django-etc. It is used to access in the templates the verbose names defined in the models.
 
 INSTALLED_APPS = [
     'myfit.apps.MyfitConfig',
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'etc',
 ]
 
 MIDDLEWARE = [
@@ -126,4 +128,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = 'activities/'
+LOGIN_REDIRECT_URL = '/myfit/activities/'
+LOGOUT_REDIRECT_URL = '/myfit/home/'

@@ -22,9 +22,10 @@ TODOs
   I would like to do this from the beginning. So first of all I should implement a home page from where a user can login.
 - Find and implement a formula to calculate the limits of all heart rate zones.
 - Where do I implement the methods to set the "calculated fields of my models"? I think I have to do that in views not in the models.
+  Look at models.py in bptrack; in there I implemented a method in the models.
 - Add to the uml model and to the django app the remaining header data (i.e. those I have not included yet).
 - Add the <log></log> data to the uml model and to the django app.
 - Implement the owner-detail view and update url.py
 - Implement the device-detail view and update url.py
 - Implement the activty-detail view and update url.py
-- Check here how to use Bootstrap with Django (https://django-bootstrap3.readthedocs.io/en/latest/index.html) or here (https://tutorial.djangogirls.org/en/css/)
+- In activity_list.html work on the chart (there is a starting point and use Bootstrap Dashboard example)

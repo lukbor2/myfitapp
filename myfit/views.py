@@ -7,6 +7,7 @@ def home(request):
 
 class ActivityListView(generic.ListView):
     model = Activity
+    # context_object_name = 'all_activities'
 
 class ActivityDetailView(generic.DetailView):
     model = Activity
