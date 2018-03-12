@@ -28,5 +28,4 @@ TODOs
 - Implement the device-detail view and update url.py
 - Implement the activty-detail view and update url.py
 - In activity_list.html work on the chart (there is a starting point and use Bootstrap Dashboard example)
-- Implement a way for new users to register (rather than creating them in Admin tool).
-  There are good information here: https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
+- Check the styling of the username showed in the view showing the list of activities.
