@@ -1,3 +1,11 @@
+How to start the django app:
+
+python manage.py runserver $IP:$PORT
+
+******************************************
+
+How to start MySQL (at the end I did NOT use MySQL on C9)
+
 # start MySQL. Will create an empty database on first start
 $ mysql-ctl start
 
@@ -32,3 +40,4 @@ c9
 And my hostname is:
 
 lukbor2-myfitapp-5975123
+

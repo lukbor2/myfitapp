@@ -25,7 +25,7 @@ SECRET_KEY = '3+f7er-mf8n&sky8-ix+s%lr@_n0)@avq-*3(i)e)klgluu0$9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['myfitapp-lukbor2.c9users.io']
 
 
 # Application definition
@@ -75,8 +75,10 @@ WSGI_APPLICATION = 'myfitapp.wsgi.application'
 
 
 # Database
-# Using MySQL. I created a schema called myfitapp .
+# Using MySQL for desktop development. I created a schema called myfitapp .
+# On Cloud9 I am using SQLite so I have to manually change the connection to the db (commen the one you don't use.)
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -87,7 +89,13 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
