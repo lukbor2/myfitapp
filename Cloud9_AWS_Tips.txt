@@ -1,0 +1,20 @@
+*** IN GENERAL ***
+
+After creating the environment, without doing anything I have python3.6 and Django 2.
+To use python3.6 in the command line remember to use
+
+python3
+
+Furthermore, when using pip to work on the python3.6 environment remember to use the command
+
+sudo pip-3.6
+
+*** LAUNCH THE DJANGO DEV SERVER ***
+
+python3 manage.py runserver $IP:$PORT
+
+Then a link will be available to get a tab with the app running.
+
+*** DATABASE ***
+
+To keep things simple with AWS I use SQLite; so remember to change the DATABASES in settings.py .
