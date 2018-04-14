@@ -2,16 +2,36 @@
 
 {% block title %} MyFitApp Signup {% endblock %}
 {% block content %}
-<div class="container">
-  <h2>Sign Up Here</h2>
+
+{% load static %}
+<link href="{% static 'css/starter-template.css' %}" rel="stylesheet">
+<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href= {% url 'myfit-home' %}>MyFitApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav mr-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'logout' %}">Logout<span class="sr-only">(current)</span></a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+</nav>
+
+<main role="main" class="container">
+    <h1>Signup Here</h1>
     <form method="post" class="form">
     {% csrf_token %}
       {% for field in user_form %}
         <div class="form-group row">
-          <label class = "col-sm-3 col-form-label">{{ field.label_tag }}</label>
-          <div class="col-sm-9">{{ field }}
+          <label class = "col-sm-2 col-form-label">{{ field.label_tag }}</label>
+          <div class="col-sm-10">{{ field }}
           {% if field.help_text %}
-            <small class="form-text text-muted">{{ field.help_text }}</small>
+            <p> <small class="form-text text-muted">{{ field.help_text|safe }}</small></p>
           {% endif %}
           {% for error in field.errors %}
             <p style="color: red">{{ error }}</p>
@@ -21,10 +41,10 @@
       {% endfor %}
       {% for field in profile_form %}
         <div class="form-group row">
-          <label class = "col-sm-3 col-form-label">{{ field.label_tag }}</label>
-          <div class="col-sm-9">{{ field }}
+          <label class = "col-sm-2 col-form-label">{{ field.label_tag }}</label>
+          <div class="col-sm-10">{{ field }}
           {% if field.help_text %}
-            <small style="color: grey">{{ field.help_text }}</small>
+            <small style="color: grey">{{ field.help_text|safe }}</small>
           {% endif %}
           {% for error in field.errors %}
             <p style="color: red">{{ error }}</p>
@@ -37,6 +57,6 @@
           <button type="submit" class="btn btn-primary">Sign up</button>
         </div>
       </div>
-</form>
-</div>
+    </form>
+</main>
   {% endblock %}
