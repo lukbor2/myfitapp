@@ -44,7 +44,7 @@
           <label class = "col-sm-2 col-form-label">{{ field.label_tag }}</label>
           <div class="col-sm-10">{{ field }}
           {% if field.help_text %}
-            <small style="color: grey">{{ field.help_text|safe }}</small>
+            <p><small style="color: grey">{{ field.help_text|safe }}</small></p>
           {% endif %}
           {% for error in field.errors %}
             <p style="color: red">{{ error }}</p>

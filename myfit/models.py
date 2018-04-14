@@ -29,6 +29,7 @@ class Device_Owner(models.Model):
     heart_rate_zone4_high = models.IntegerField(blank=True, null=False, default=0) #I will have a method calculating the heart rate zones.
     heart_rate_zone5_low = models.IntegerField(blank=True, null=False, default=0) #I will have a method calculating the heart rate zones.
     heart_rate_zone5_high = models.IntegerField(blank=True, null=False, default=0) #I will have a method calculating the heart rate zones.
+    log_files_location = models.CharField(blank=True, null=True, max_length = 500, help_text='Absolute path of the location of your activities log files')
     user = models.OneToOneField(User, on_delete=models.CASCADE) #Each Device_Owner is also a user in terms of authentication.
 
     @receiver(post_save, sender=User)

@@ -20,8 +20,8 @@ I am working on a UML model first. Then I will start building the Django models 
 
 TODOs
 
-- Complete the view where I upload the activities. IMPORTANT: how to handle log files which have been already loaded; decide what to do.
-- Implement security, so that a device owner can see the data related to his device(s) only.
+- Do some checks in the loop which reads logs files; first of all check the path exists and it is a directory.
+- When saving an activity, handle the exception(s) which can happen in that moment. Ideally if one file has a problem it does not stop loading other files.
 - Find and implement a formula to calculate the limits of all heart rate zones.
 - Where do I implement the methods to set the "calculated fields of my models"? I think I have to do that in views not in the models.
   Look at models.py in bptrack; in there I implemented a method in the models.
@@ -31,4 +31,3 @@ TODOs
 - Implement the device-detail view and update url.py
 - Implement the activty-detail view and update url.py
 - In activity_list.html work on the chart (there is a starting point and use Bootstrap Dashboard example)
-- Find a way for the user to define a default folder where the logs are stored and a way to change it.

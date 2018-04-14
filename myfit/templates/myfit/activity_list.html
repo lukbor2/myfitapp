@@ -35,15 +35,15 @@
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="{% url 'myfit-upload-activities' %}">
+            <a class="nav-link active" href="{% url 'myfit-activities' %}">
               <span data-feather="home"></span>
-                Upload Activities from Log Files <span class="sr-only">(current)</span>
+                Main Dashboard <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{% url 'myfit-upload-activities' %}">
               <span data-feather="file"></span>
-              Link 2
+              Upload Activities from Log Files
             </a>
           </li>
             <li class="nav-item">
