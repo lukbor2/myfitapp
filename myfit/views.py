@@ -56,39 +56,45 @@ class ProfileUpdateView(generic.UpdateView):
 def upload_activities_view(request):
     #Using this view to upload the activities from a given folder. Each activity is a .log file.
     #The folder in defined in the user's profile.
-
+    message = 'No Errors!'
     logs_folder = str(request.user.device_owner.log_files_location)
     p = Path(logs_folder)
-    for file in p.iterdir():
-        tree = ET.parse(file)
-        root = tree.getroot()
-        a_id = root[2].text
+    if p.is_dir():
+        for file in p.iterdir():
+            tree = ET.parse(file)
+            root = tree.getroot()
+            a_id = root[2].text
 
-        a_time_original = root[1].text
-        date_and_time = a_time_original.split('T') #This is a list with the date as first element and time as the second one.
-        a_date = datetime.strptime(date_and_time[0], '%Y-%m-%d')
-        a_time = datetime.strptime(date_and_time[1], '%H:%M:%S')
+            a_time_original = root[1].text
+            date_and_time = a_time_original.split('T') #This is a list with the date as first element and time as the second one.
+            a_date = datetime.strptime(date_and_time[0], '%Y-%m-%d')
+            a_time = datetime.strptime(date_and_time[1], '%H:%M:%S')
 
-        a_duration = int(root[5][0][1].text)
-        a_speed_avg = Decimal(float(root[5][0][7][0].text)/1000)
-        a_speed_max = Decimal(float(root[5][0][7][1].text)/1000)
-        a_hr_avg = int(root[5][0][10][0].text)
-        a_hr_max = int(root[5][0][10][1].text)
-        a_hr_min = int(root[5][0][10][2].text)
-        a_type = int(root[5][0][12].text)
-        a_type_name = root[5][0][13].text
-        a_device_used = Device.objects.get(pk=root[0].text)
+            a_duration = int(root[5][0][1].text)
+            a_speed_avg = Decimal(float(root[5][0][7][0].text)/1000)
+            a_speed_max = Decimal(float(root[5][0][7][1].text)/1000)
+            a_hr_avg = int(root[5][0][10][0].text)
+            a_hr_max = int(root[5][0][10][1].text)
+            a_hr_min = int(root[5][0][10][2].text)
+            a_type = int(root[5][0][12].text)
+            a_type_name = root[5][0][13].text
+            a_device_used = Device.objects.get(pk=root[0].text)
 
-        a_hh, a_mm, a_ss = calculate_duration(a_duration)
+            a_hh, a_mm, a_ss = calculate_duration(a_duration)
 
-        new_activity = Activity(activity_id = a_id, activity_time_original = a_time_original, activity_date = a_date ,activity_time = a_time , activity_duration = a_duration, activity_speed_avg = a_speed_avg,
-        activity_speed_max = a_speed_max, activity_hr_avg = a_hr_avg, activity_hr_max = a_hr_max, activity_hr_min = a_hr_min, activity_type = a_type,
-        activity_type_name = a_type_name, activity_device_used = a_device_used, activity_duration_hh = a_hh, activity_duration_mm = a_mm, activity_duration_ss = a_ss)
+            new_activity = Activity(activity_id = a_id, activity_time_original = a_time_original, activity_date = a_date ,activity_time = a_time , activity_duration = a_duration, activity_speed_avg = a_speed_avg,
+            activity_speed_max = a_speed_max, activity_hr_avg = a_hr_avg, activity_hr_max = a_hr_max, activity_hr_min = a_hr_min, activity_type = a_type,
+            activity_type_name = a_type_name, activity_device_used = a_device_used, activity_duration_hh = a_hh, activity_duration_mm = a_mm, activity_duration_ss = a_ss)
 
-        #By default Django will execute an update when a log file related to an existing activity is read. This is the default behavior.
-        new_activity.save()
+            #By default Django will execute an update when a log file related to an existing activity is read. This is the default behavior.
+            new_activity.save()
+    else:
+        message = 'The path saved in the user profile is NOT valid.'
 
-    return render(request, 'myfit/upload_activities.html', {'logs_folder': logs_folder})
+    return render(request, 'myfit/upload_activities.html', {
+    'logs_folder': logs_folder,
+    'message' : message
+    })
 
 def calculate_duration(original):
     #Transforms the numeber coming from the log files representing the duration into hours, minutes and seconds.
