@@ -80,7 +80,11 @@
     <p>Uploading log from this folder: <em>{{ logs_folder }}</em></p>
     <p>You can change the folder in your profile.</p>
     <p>Error Messages:</p>
-    {{ message }}
+    {% for message in error_message %}
+      <ul>
+        <li style="color: red">{{ message }}</li>
+      </ul>
+    {% endfor %}
   </main>
 </div>
 </div>
