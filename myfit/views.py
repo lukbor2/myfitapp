@@ -7,6 +7,7 @@ from myfit.forms import ProfileForm
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 import xml.etree.ElementTree as ET
+import os
 import math
 from pathlib import Path
 from decimal import Decimal
@@ -69,7 +70,8 @@ def upload_activities_view(request):
             try:
                 tree = ET.parse(file)
             except ET.ParseError:
-                error_message.append('Error parsing one of the files.')
+                (h, t) = os.path.split(file)
+                error_message.append('Error parsing file: ' + str(t))
             else:
                 root = tree.getroot()
                 a_id = root[2].text
