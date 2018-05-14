@@ -65,42 +65,6 @@ def upload_activities_view(request):
     error_message = []
     logs_folder = str(request.user.device_owner.log_files_location)
     p = Path(logs_folder)
-    error_message = create_activity_from_file(p)
-
-    return render(request, 'myfit/upload_activities.html', {
-    'logs_folder': logs_folder,
-    'error_message' : error_message
-    })
-
-def calculate_duration(original):
-    #Transforms the numeber coming from the log files representing the duration into hours, minutes and seconds.
-
-    x = original / 1000
-    y = x / 3600
-    if y > 1:
-        a, b = math,modf(y)
-        hh = int(b)
-    else:
-        hh = 0
-
-    z = y - hh
-    y = z * 60
-
-    if y > 1:
-        a, b = math.modf(y)
-        mm = int(b)
-    else:
-        mm = 0
-
-    z = y - mm
-    y = z * 60
-    ss = int(y)
-
-    return (hh, mm, ss)
-
-
-def create_activity_from_file(p):
-    error_message = []
     if p.is_dir():
         for file in p.iterdir():
             try:
@@ -141,4 +105,33 @@ def create_activity_from_file(p):
     if len(error_message) == 0:
         error_message.append('No Errors!')
 
-    return error_message
+    return render(request, 'myfit/upload_activities.html', {
+    'logs_folder': logs_folder,
+    'error_message' : error_message
+    })
+
+def calculate_duration(original):
+    #Transforms the numeber coming from the log files representing the duration into hours, minutes and seconds.
+
+    x = original / 1000
+    y = x / 3600
+    if y > 1:
+        a, b = math,modf(y)
+        hh = int(b)
+    else:
+        hh = 0
+
+    z = y - hh
+    y = z * 60
+
+    if y > 1:
+        a, b = math.modf(y)
+        mm = int(b)
+    else:
+        mm = 0
+
+    z = y - mm
+    y = z * 60
+    ss = int(y)
+
+    return (hh, mm, ss)
