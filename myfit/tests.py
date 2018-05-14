@@ -15,17 +15,22 @@ class ActivityLoadTestCase(TestCase):
     """
     def setUp(self):
         new_user = User.objects.create_user('test for test', 'test_for_test@gmail.com', 'test_for_testpassword')
-        new_user.save()
-        new_user.refresh_from_db()  # This will load the Profile created by the Signal
+        new_user.save() #Because of the signal sent to the Device_Owner model, a Device_Owner instance is created at this point. But it does not have any field filled with data.
 
-
-        new_device_owner = Device_Owner(name = 'test', surname = 'for test', date_of_birth = '1971-03-31', age = 47, sex = 'M', heart_rate_rest = 55, instance=user.device_owner)
-        #new_device_owner = Device_Owner(name = 'test', surname = 'for test', date_of_birth = '1971-03-31', age = 47, sex = 'M', heart_rate_rest = 55, user = new_user)
+        new_device_owner = Device_Owner.objects.get(user = new_user) #Here I retrieve the Device_Owner instance just created by the function called with the signal from the post_save in User.
+        #Then I fill the fields for the Device_Owner instance and then save it to the db.
+        new_device_owner.name = 'test'
+        new_device_owner.surname = 'for test'
+        new_device_owner.date_of_birth = '1971-03-31'
+        new_device_owner.age = 47
+        new_device_owner.sex = 'M'
+        new_device_owner.heart_rate_rest = 55
         new_device_owner.save()
 
         new_device = Device(device_serial_no = 'ECF0325109001300', device_model = 'device_model_test', device_name = 'device_name_test', device_owner = new_device_owner)
         new_device.save()
 
+    #TODO: now that I have the setup done, I shall write some more tests.    
     def test_activity_device_used(self):
         test_folder = '/home/luca/git/myfitapp/Logs_Test' #I assume this is a folder where I have the files I want to test.
         p = Path(test_folder)
@@ -34,4 +39,4 @@ class ActivityLoadTestCase(TestCase):
 
         activities = Activity.objects.all()
         for a in activities:
-            self.assertEqual(a.activity_device_used, 'ECF0325109001300')
+            self.assertEqual(a.activity_device_used.device_serial_no, 'ECF0325109001300')
